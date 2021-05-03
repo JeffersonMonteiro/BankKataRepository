@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "1791a7af-184d-4049-acdc-586004f7c055",
+		"name": "BankKata",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET BALANCE",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transaction/balance_result?date=2021/10/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"balance_result"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2021/10/10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SAVE ALL TRANSACTIONS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"transactions\": [\r\n        {\r\n            \"type\": \"debit\",\r\n            \"amount\": 35.2,\r\n            \"date\": \"2021-01-10\",\r\n            \"time\": \"7:30PM\",\r\n            \"to\": \"JohnDoe\",\r\n            \"comment\": null\r\n        },\r\n        {\r\n            \"type\": \"credit\",\r\n            \"amount\": 28.56,\r\n            \"date\": \"2021-01-11\",\r\n            \"time\": \"12:30PM\",\r\n            \"to\": \"JaneDoe\",\r\n            \"comment\": \"Thanks getting me out to a movie!\"\r\n        },\r\n        {\r\n            \"type\": \"debit\",\r\n            \"amount\": 56.00,\r\n            \"date\": \"2021-01-09\",\r\n            \"time\": \"3:30AM\",\r\n            \"to\": \"HydroUtility\",\r\n            \"comment\": \"Bill #1992837 for Dec 2020\"\r\n        },\r\n        {\r\n            \"type\": \"debit\",\r\n            \"amount\": 2430.65,\r\n            \"date\": \"2021-11-11\",\r\n            \"time\": \"12:30PM\",\r\n            \"to\": \"BuildMyComputer.com\",\r\n            \"comment\": \"Enjoy your new toy! Order #182827226\"\r\n        },\r\n        {\r\n            \"type\": \"debit\",\r\n            \"amount\": 56.00,\r\n            \"date\": \"2021-01-09\",\r\n            \"time\": \"3:30AM\",\r\n            \"to\": \"HydroUtility\",\r\n            \"comment\": \"Bill #1992837 for Dec 2020\"\r\n        },\r\n        {\r\n            \"type\": \"debit\",\r\n            \"amount\": 2430.65,\r\n            \"date\": \"2021-11-11\",\r\n            \"time\": \"12:30PM\",\r\n            \"to\": \"BuildMyComputer.com\",\r\n            \"comment\": \"Enjoy your new toy! Order #182827226\"\r\n        }\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transaction/save_bulk_transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"save_bulk_transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL TRANSACTIONS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transaction/all_transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"all_transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FIND PAST TRANSACTIONS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transaction/past_transactions?date=2021/01/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"past_transactions"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2021/01/10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FIND FUTURE TRANSACTIONS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/transaction/future_transactions?date=2010/01/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transaction",
+						"future_transactions"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2010/01/10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
