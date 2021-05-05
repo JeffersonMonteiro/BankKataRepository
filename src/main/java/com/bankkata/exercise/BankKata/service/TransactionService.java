@@ -85,8 +85,8 @@ public class TransactionService {
     }
 
     /**
+     *
      * @param listTransactions
-     * @throws ParseException
      */
     private void setDatetime(List<Transaction> listTransactions) {
         try {
