@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.bankkata.exercise.BankKata.constants.Constants.DATE_PATTERN;
+import static com.bankkata.exercise.BankKata.constants.Constants.DATE_TIME_PATTERN;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,7 +52,7 @@ public class TransactionControllerIntegrationTest {
     @Before
     public void setup() throws ParseException {
         this.mockMvc = standaloneSetup(this.transactionController).build();
-        transaction = new Transaction((long) 1, "debit", 45.0, "JohnDoe", "Test1", new Date(), "07:30AM");
+        transaction = new Transaction((long) 1, "debit", 45.0, "JohnDoe", "Test1", "2021/01/10", "07:30AM", new SimpleDateFormat(DATE_TIME_PATTERN).parse("2021-01-10 07:30AM"));
         transactionList = new ArrayList<>();
         transactionListObject = new TransactionList();
         transactionList.add(transaction);

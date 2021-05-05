@@ -8,10 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;
 
-import static com.bankkata.exercise.BankKata.constants.Constants.DATE_PARAM;
-import static com.bankkata.exercise.BankKata.constants.Constants.FUTURE_TRANSACTIONS_SQL_QUERY;
-import static com.bankkata.exercise.BankKata.constants.Constants.PAST_TRANSACTIONS_SQL_QUERY;
-
 
 public interface TransactionRepository  extends JpaRepository<Transaction, Long> {
 
@@ -20,14 +16,14 @@ public interface TransactionRepository  extends JpaRepository<Transaction, Long>
      * @param date
      * @return List<Transaction></>
      */
-    @Query(PAST_TRANSACTIONS_SQL_QUERY)
-    List<Transaction> findPastTransactions(@Param(DATE_PARAM) Date date);
+    @Query("select a from Transaction a where a.datetime <= :datetime")
+    List<Transaction> findPastTransactions(@Param("datetime") Date date);
 
     /**
      * Repository service used to return all future transactions based on the current date
      * @param date
      * @return List<Transaction></>
      */
-    @Query(FUTURE_TRANSACTIONS_SQL_QUERY)
-    List<Transaction> findFutureTransactions(@Param(DATE_PARAM) Date date);
+    @Query("select a from Transaction a where a.datetime >= :datetime")
+    List<Transaction> findFutureTransactions(@Param("datetime") Date date);
 }

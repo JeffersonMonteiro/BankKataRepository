@@ -2,6 +2,7 @@ package com.bankkata.exercise.BankKata.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,9 +31,7 @@ public class Transaction {
     private Double amount;
 
     @Column(name = "DATE")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date date;
+    private String date;
 
     @Column(name = "TIME")
     private String time;
@@ -43,25 +42,34 @@ public class Transaction {
     @Column(name = "COMMENT")
     private String comment;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mma")
+    @Column(name = "DATETIME")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Date datetime;
+
     /**
      * Constructor to Transaction object
      * @param id
      * @param type
      * @param amount
-     * @param to
-     * @param comment
      * @param date
      * @param time
+     * @param to
+     * @param comment
+     * @param datetime
      */
-    public Transaction(long id, String type, Double amount, String to, String comment, Date date, String time) {
+    public Transaction(long id, String type, Double amount, String date, String time, String to, String comment, Date datetime) {
         this.id = id;
         this.type = type;
         this.amount = amount;
-        this.to = to;
-        this.comment = comment;
         this.date = date;
         this.time = time;
+        this.to = to;
+        this.comment = comment;
+        this.datetime = datetime;
     }
+
 
     public Transaction() {
     }
@@ -150,7 +158,7 @@ public class Transaction {
      * get method to return date
      * @return
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -158,7 +166,7 @@ public class Transaction {
      * set method to date
      * @param date
      */
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -176,5 +184,13 @@ public class Transaction {
      */
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 }

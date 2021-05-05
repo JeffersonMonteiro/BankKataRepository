@@ -4,14 +4,16 @@ import com.bankkata.exercise.BankKata.model.Transaction;
 import com.bankkata.exercise.BankKata.model.TransactionList;
 import com.bankkata.exercise.BankKata.repository.TransactionRepository;
 import com.bankkata.exercise.BankKata.util.Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import static com.bankkata.exercise.BankKata.constants.Constants.BALANCE_MESSAGE;
+import static com.bankkata.exercise.BankKata.constants.Constants.DATE_TIME_PATTERN;
 import static com.bankkata.exercise.BankKata.constants.Constants.DEBIT;
 import static com.bankkata.exercise.BankKata.constants.Constants.EMPTY_LIST_MESSAGE;
 import static com.bankkata.exercise.BankKata.constants.Constants.NUMBER_ITEMS_MESSAGE;
@@ -20,12 +22,18 @@ import static com.bankkata.exercise.BankKata.constants.Constants.NUMBER_ITEMS_ME
 @Service
 public class TransactionService {
 
-    @Autowired
     private TransactionRepository transactionRepository;
 
     private TransactionList transactionList;
 
     private StringBuffer resultMessage;
+
+    /**
+     * @param transactionRepository
+     */
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
     /***
      * Service to get all transactions
@@ -38,8 +46,9 @@ public class TransactionService {
     }
 
     /**
-     ** Service to return past transactions based on the date which you input. it will return all transactions
+     * * Service to return past transactions based on the date which you input. it will return all transactions
      * that are equal or less than current date
+     *
      * @param date the
      * @return TransactionList the payload type display the messages
      */
@@ -50,8 +59,9 @@ public class TransactionService {
     }
 
     /**
-     *  * Service to return future transactions based on the date which you input. it will return all transactions
-     *  that are equal or greater than current date
+     * * Service to return future transactions based on the date which you input. it will return all transactions
+     * that are equal or greater than current date
+     *
      * @param date
      * @return
      */
@@ -63,16 +73,35 @@ public class TransactionService {
 
     /**
      * Service to save transactions as bulk
+     *
      * @param transactionList
      * @return
      */
     public String saveBulkTransactions(TransactionList transactionList) {
-        List<Transaction> resultList = transactionRepository.saveAll(transactionList.getTransactions());
+        List<Transaction> listTransactions = transactionList.getTransactions();
+        setDatetime(listTransactions);
+        List<Transaction> resultList = transactionRepository.saveAll(listTransactions);
         return getResultMessage(resultList);
     }
 
     /**
+     * @param listTransactions
+     * @throws ParseException
+     */
+    private void setDatetime(List<Transaction> listTransactions) {
+        try {
+            for (Transaction item : listTransactions) {
+                item.setDatetime(new SimpleDateFormat(DATE_TIME_PATTERN).parse(item.getDate()
+                        + " " + item.getTime()));
+            }
+        } catch (ParseException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
      * Method to build a message based on the quantity of messages that were stored into the database
+     *
      * @param resultList
      * @return
      */
@@ -88,6 +117,7 @@ public class TransactionService {
 
     /**
      * Service to return the balance based on past transactions
+     *
      * @param date
      * @return
      */
@@ -98,6 +128,7 @@ public class TransactionService {
 
     /**
      * Method to calculate the amount based on DEBIT/CREDIT types
+     *
      * @param transactions
      * @return
      */
@@ -112,6 +143,6 @@ public class TransactionService {
                 resultValue = resultValue + item.getAmount();
             }
         }
-        return resultMessage.append(BALANCE_MESSAGE + Util.roundDouble(resultValue,2)).toString();
+        return resultMessage.append(BALANCE_MESSAGE + Util.roundDouble(resultValue, 2)).toString();
     }
 }
