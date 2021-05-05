@@ -45,7 +45,7 @@ public class TransactionController {
      * @return String
      */
     @PostMapping(path = "/save_bulk_transactions", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String saveBulkTransactions(@RequestBody TransactionList list) throws ParseException {
+    public String saveBulkTransactions(@RequestBody TransactionList list) {
         return service.saveBulkTransactions(list);
     }
 
