@@ -26,4 +26,9 @@ public interface TransactionRepository  extends JpaRepository<Transaction, Long>
      */
     @Query("select a from Transaction a where a.datetime >= :datetime")
     List<Transaction> findFutureTransactions(@Param("datetime") Date date);
+
+
+    @Query("select a from Transaction a where a.datetime >= :dateInitial and a.datetime <= :dateFinal")
+    List<Transaction> findBetweenDatesTransactions(@Param("dateInitial") Date dateInitial
+            , @Param("dateFinal") Date dateFinal);
 }

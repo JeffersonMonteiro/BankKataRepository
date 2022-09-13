@@ -84,6 +84,14 @@ public class TransactionService {
         return getResultMessage(resultList);
     }
 
+    public TransactionList findBetweenDatesTransactions(Date dateInitial, Date dateFinal) {
+        List<Transaction> resultList = transactionRepository.findBetweenDatesTransactions(dateInitial, dateFinal);
+        transactionList = new TransactionList();
+        transactionList.setTransactions(resultList);
+        return transactionList;
+    }
+
+
     /**
      *
      * @param listTransactions

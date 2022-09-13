@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.ParseException;
 import java.util.Date;
 
 @RestController
@@ -82,5 +81,13 @@ public class TransactionController {
     public TransactionList findFutureTransactions(
             @RequestParam("date") @DateTimeFormat(pattern = "yyyy/MM/dd") Date date) {
         return service.findFutureTransactions(date);
+    }
+
+    @GetMapping(path = "/between_transactions", produces = MediaType.APPLICATION_JSON_VALUE)
+    public TransactionList findBetweenDatesTransactions(
+            @RequestParam("dateInitial") @DateTimeFormat(pattern = "yyyy/MM/dd") Date dateInitial,
+            @RequestParam("dateFinal") @DateTimeFormat(pattern = "yyyy/MM/dd") Date dateFinal){
+        return service.findBetweenDatesTransactions(dateInitial, dateFinal);
+
     }
 }
